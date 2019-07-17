@@ -15,9 +15,11 @@ import 'package:graphql/src/link/http/http_config.dart';
 import './link_http_helper_deprecated_stub.dart'
     if (dart.library.io) './link_http_helper_deprecated_io.dart';
 
+    typedef GetUrlFunction = String Function();
+
 class HttpLink extends Link {
   HttpLink({
-    @required String uri,
+    @required GetUrlFunction getUrl,
     bool includeExtensions,
 
     /// pass on customized httpClient, especially handy for mocking and testing
@@ -83,7 +85,7 @@ class HttpLink extends Link {
               try {
                 // httpOptionsAndBody.body as String
                 final BaseRequest request = await _prepareRequest(
-                    uri, httpHeadersAndBody.body, httpHeaders);
+                    await getUrl(), httpHeadersAndBody.body, httpHeaders);
 
                 response = await fetcher.send(request);
 
