@@ -6,6 +6,7 @@ class FetchResult {
     this.data,
     this.extensions,
     this.context,
+    this.headers,
   });
   int statusCode;
   String reasonPhrase;
@@ -15,5 +16,6 @@ class FetchResult {
   /// List<dynamic> or Map<String, dynamic>
   dynamic data;
   Map<String, dynamic> extensions;
+  Map<String, String> headers;
   Map<String, dynamic> context;
 }

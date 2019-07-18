@@ -15,7 +15,7 @@ import 'package:graphql/src/link/http/http_config.dart';
 import './link_http_helper_deprecated_stub.dart'
     if (dart.library.io) './link_http_helper_deprecated_io.dart';
 
-    typedef GetUrlFunction = String Function();
+typedef GetUrlFunction = String Function();
 
 class HttpLink extends Link {
   HttpLink({
@@ -313,6 +313,7 @@ Future<FetchResult> _parseResponse(StreamedResponse response) async {
   final Map<String, dynamic> jsonResponse =
       json.decode(decodedBody) as Map<String, dynamic>;
   final FetchResult fetchResult = FetchResult();
+  fetchResult.headers = response.headers;
 
   if (jsonResponse['errors'] != null) {
     fetchResult.errors =
