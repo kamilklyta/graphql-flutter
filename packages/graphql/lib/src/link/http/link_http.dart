@@ -100,8 +100,6 @@ class HttpLink extends Link {
                 print(<dynamic>[error.runtimeType, error]);
                 controller.addError(error);
               }
-              // call next link
-              forward?.call(operation);
               await controller.close();
             }
 
