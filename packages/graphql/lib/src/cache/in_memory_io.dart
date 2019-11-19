@@ -11,14 +11,13 @@ import 'package:meta/meta.dart';
 import 'package:graphql/src/cache/cache.dart';
 import 'package:graphql/src/utilities/helpers.dart' show deeplyMergeLeft;
 import 'package:path/path.dart';
-
+import 'package:path_provider/path_provider.dart';
 
 class InMemoryCache implements Cache {
-
   InMemoryCache({
     this.storagePrefix = '',
   });
-  
+
   final FutureOr<String> storagePrefix;
 
   bool _writingToStorage = false;
@@ -71,8 +70,18 @@ class InMemoryCache implements Cache {
     data.clear();
   }
 
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+
+    return directory.path;
+  }
+
   FutureOr<File> get _localStorageFile async {
-    return File(join(await storagePrefix, 'cache.txt'));
+    return File(join(
+      await _localPath,
+      await storagePrefix,
+      'cache.txt',
+    ));
   }
 
   Future<dynamic> _writeToStorage() async {
